@@ -1,0 +1,77 @@
+1、一个流式处理可以分为三个部分：转换成流、中间操作、终端操作
+2、中间操作
+  2.1、过滤
+    过滤，顾名思义就是按照给定的要求对集合进行筛选满足条件的元素，java8提供的筛选操作包括：filter、distinct、limit、skip。
+
+    filter：其定义为：Stream<T> filter(Predicate<? super T> predicate)，
+            filter接受一个谓词Predicate，我们可以通过这个谓词定义筛选条件，在介绍lambda表达式时我们介绍过
+            Predicate是一个函数式接口，其包含一个test(T t)方法，该方法返回boolean。
+
+    distinct：distinct操作类似于我们在写SQL语句时，添加的DISTINCT关键字，用于去重处理，distinct基于Object.equals(Object)实现
+
+
+    limit:  limit操作也类似于SQL语句中的LIMIT关键字，不过相对功能较弱，limit返回包含前n个元素的流，当集合大小小于n时，则返回实际长度.
+            说到limit，不得不提及一下另外一个流操作：sorted。该操作用于对流中元素进行排序，sorted要求待比较的元素必须实现Comparable接口，如果没有实现也不要紧，我们可以将比较器作为参数传递给sorted(Comparator<? super T> comparator).
+
+    skip :skip操作与limit操作相反，如同其字面意思一样，是跳过前n个元素,通过skip，就会跳过前面两个元素，返回由后面所有元素构造的流，如果n大于满足条件的集合的长度，则会返回一个空的集合。
+
+  2.2 映射
+      在java8的流式处理中，主要包含两类映射操作：map和flatMap。
+
+      map
+      举例说明，假设我们希望筛选出所有专业为计算机科学的学生姓名，那么我们可以在filter筛选的基础之上，通过map将学生实体映射成为学生姓名字符串，具体实现如下：
+      List<String> names = students.stream()
+                                  .filter(student -> "计算机科学".equals(student.getMajor()))
+                                  .map(Student::getName).collect(Collectors.toList());
+      除了上面这类基础的map，java8还提供了mapToDouble(ToDoubleFunction<? super T> mapper)，
+      mapToInt(ToIntFunction<? super T> mapper)，
+      mapToLong(ToLongFunction<? super T> mapper)，
+      这些映射分别返回对应类型的流，java8为这些流设定了一些特殊的操作，比如我们希望计算所有专业为计算机科学学生的年龄之和，那么我们可以实现如下：
+      int totalAge = students.stream()
+                          .filter(student -> "计算机科学".equals(student.getMajor()))
+                          .mapToInt(Student::getAge).sum();
+
+      flatMap
+      flatMap与map的区别在于 flatMap是将一个流中的每个值都转成一个个流，然后再将这些流扁平化成为一个流 。举例说明，假设我们有一个字符串数组String[] strs = {"java8", "is", "easy", "to", "use"};，我们希望输出构成这一数组的所有非重复字符，那么我们可能首先会想到如下实现：
+      List<String[]> distinctStrs = Arrays.stream(strs)
+                                      .map(str -> str.split(""))  // 映射成为Stream<String[]>
+                                      .distinct()
+                                      .collect(Collectors.toList());
+
+      在执行map操作以后，我们得到是一个包含多个字符串（构成一个字符串的字符数组）的流，此时执行distinct操作是基于在这些字符串数组之间的对比，所以达不到我们希望的目的，此时的输出为：
+      distinct只有对于一个包含多个字符的流进行操作才能达到我们的目的，即对Stream<String>进行操作。此时flatMap就可以达到我们的目的：
+
+      List<String> distinctStrs = Arrays.stream(strs)
+                                      .map(str -> str.split(""))  // 映射成为Stream<String[]>
+                                      .flatMap(Arrays::stream)  // 扁平化为Stream<String>
+                                      .distinct()
+                                      .collect(Collectors.toList());
+      flatMap将由map映射得到的Stream<String[]>，转换成由各个字符串数组映射成的流Stream<String>，再将这些小的流扁平化成为一个由所有字符串构成的大流Steam<String>，从而能够达到我们的目的。
+      与map类似，flatMap也提供了针对特定类型的映射操作：flatMapToDouble(Function<? super T,? extends DoubleStream> mapper)，flatMapToInt(Function<? super T,? extends IntStream> mapper)，flatMapToLong(Function<? super T,? extends LongStream> mapper)。
+
+
+ 2.3. 终端操作
+    2.3.1 查找
+    allMatch
+    allMatch用于检测是否全部都满足指定的参数行为，如果全部满足则返回true，例如我们希望检测是否所有的学生都已满18周岁，那么可以实现为：
+    boolean isAdult = students.stream().allMatch(student -> student.getAge() >= 18);
+
+    anyMatch
+    anyMatch则是检测是否存在一个或多个满足指定的参数行为，如果满足则返回true，例如我们希望检测是否有来自武汉大学的学生，那么可以实现为：
+    boolean hasWhu = students.stream().anyMatch(student -> "武汉大学".equals(student.getSchool()));
+
+    noneMathch
+    noneMatch用于检测是否不存在满足指定行为的元素，如果不存在则返回true，例如我们希望检测是否不存在专业为计算机科学的学生，可以实现如下：
+    boolean noneCs = students.stream().noneMatch(student -> "计算机科学".equals(student.getMajor()));
+
+    findFirst
+    findFirst用于返回满足条件的第一个元素，比如我们希望选出专业为土木工程的排在第一个学生，那么可以实现如下
+    Optional<Student> optStu = students.stream().filter(student -> "土木工程".equals(student.getMajor())).findFirst();
+
+    findAny
+    findAny相对于findFirst的区别在于，findAny不一定返回第一个，而是返回任意一个，比如我们希望返回任意一个专业为土木工程的学生，可以实现如下：
+    Optional<Student> optStu = students.stream().filter(student -> "土木工程".equals(student.getMajor())).findAny();
+
+    2.3.2 归约
+
+    3.3 收集

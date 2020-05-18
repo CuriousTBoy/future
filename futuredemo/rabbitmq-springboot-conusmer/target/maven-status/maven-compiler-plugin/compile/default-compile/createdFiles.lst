@@ -1,0 +1,4 @@
+com\mq\MqConusmerAPP.class
+com\mq\config\RabbitMQConfig.class
+com\mq\conusmer\ConsumerB.class
+com\mq\conusmer\ConsumerA.class

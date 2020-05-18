@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/jwtdemo" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/rabbitmq-conusmer" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/rabbitmq-provider" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/rabbitmq-provider/rabbitmq-conusmer-provider" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/rabbitmq-publish-conusmer" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/rabbitmq-publish-provider" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/rabbitmq-routing-conusmer" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/rabbitmq-routing-provider" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/rabbitmq-springboot-conusmer" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/rabbitmq-springboot-provider" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/rabbitmq-topic-conusmer" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/rabbitmq-topic-provider" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/rabbitmq-utils" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/rabbitmq-utils" charset="UTF-8" />
+  </component>
+</project>

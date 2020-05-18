@@ -1,0 +1,7 @@
+C:\qycCode\futuredemo\rabbitmq-springboot-provider\src\main\java\com\mq\MqProviderAPP.java
+C:\qycCode\futuredemo\rabbitmq-springboot-provider\src\main\java\com\mq\config\RabbitMQConfig.java
+C:\qycCode\futuredemo\rabbitmq-springboot-provider\src\main\java\com\mq\controller\ProducerController.java
+C:\qycCode\futuredemo\rabbitmq-springboot-provider\src\main\java\com\mq\mqs\CustomConfirmAndReturnCallback.java
+C:\qycCode\futuredemo\rabbitmq-springboot-provider\src\main\java\com\mq\service\ProducerService.java
+C:\qycCode\futuredemo\rabbitmq-springboot-provider\src\main\java\com\mq\mqs\Producer.java
+C:\qycCode\futuredemo\rabbitmq-springboot-provider\src\main\java\com\mq\service\impl\ProducerServiceImpl.java

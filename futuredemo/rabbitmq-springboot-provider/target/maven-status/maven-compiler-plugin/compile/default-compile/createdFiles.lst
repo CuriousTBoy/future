@@ -1,0 +1,7 @@
+com\mq\MqProviderAPP.class
+com\mq\service\ProducerService.class
+com\mq\controller\ProducerController.class
+com\mq\config\RabbitMQConfig.class
+com\mq\mqs\CustomConfirmAndReturnCallback.class
+com\mq\mqs\Producer.class
+com\mq\service\impl\ProducerServiceImpl.class

@@ -1,0 +1,19 @@
+server:
+  port:8003
+spring:
+  application:
+    name:mq-provider
+  rabbitmq:
+    host: 127.0.0.1
+    virtual-host: /
+    username: guest
+    password: guest
+    port: 5672
+    #消息发送确认回调
+    publisher-confirms: true
+    #指定消息确认模式为手动确认
+    listener:
+      simple:
+        acknowledge-mode: manual
+    #发送返回监听回调
+    publisher-returns: true
